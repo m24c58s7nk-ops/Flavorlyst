@@ -106,6 +106,55 @@ const starterRecipes = [
   { id: "r54", title: "Baked Ziti", category: "Dinner", time: 50, difficulty: "Medium", servings: 2, story: "The story of Baked Ziti started with a home cook looking for a meal that felt special without being complicated. It became a repeat favorite because the ingredients are familiar, the process is approachable, and the finished dish is worth gathering around the table for. This Flavorlyst version keeps that easygoing spirit.", author: "Flavorlyst Kitchen", image: "https://images.unsplash.com/photo-1677511084683-0eba66ebaa7c?auto=format&fit=crop&w=1200&q=85", description: "A colorful dish that turns everyday ingredients into something special.", tags: ["dinner","baked","flavorlyst"], ingredients: [{q:12,u:"oz",n:"ziti pasta"},{q:2,u:"cup",n:"marinara sauce"},{q:1.5,u:"cup",n:"ricotta"},{q:1.5,u:"cup",n:"mozzarella"},{q:0.5,u:"cup",n:"Parmesan"}], steps: ["Cook the ziti until just tender and drain.","Mix the pasta with marinara and ricotta.","Transfer to a baking dish and top with mozzarella and Parmesan.","Bake until bubbling and golden."] },
   { id: "r55", title: "Coconut Chickpea Curry", category: "Dinner", time: 30, difficulty: "Easy", servings: 2, story: "The story of Coconut Chickpea Curry started with a home cook looking for a meal that felt special without being complicated. It became a repeat favorite because the ingredients are familiar, the process is approachable, and the finished dish is worth gathering around the table for. This Flavorlyst version keeps that easygoing spirit.", author: "Flavorlyst Kitchen", image: "https://images.unsplash.com/photo-1627906296851-6d9c5e4db592?auto=format&fit=crop&w=1200&q=85", description: "A cozy recipe with familiar flavors and a little Flavorlyst magic.", tags: ["dinner","coconut","flavorlyst"], ingredients: [{q:2,u:"can",n:"chickpeas"},{q:1,u:"cup",n:"coconut milk"},{q:1,u:"cup",n:"tomato sauce"},{q:1,u:"cup",n:"spinach"},{q:1,u:"tbsp",n:"curry powder"}], steps: ["Sauté the curry powder briefly.","Add chickpeas, coconut milk, and tomato sauce.","Simmer until thick and flavorful.","Stir in spinach until wilted and serve."] },
   { id: "r56", title: "BBQ Chicken Flatbread", category: "Dinner", time: 25, difficulty: "Easy", servings: 2, story: "The story of BBQ Chicken Flatbread started with a home cook looking for a meal that felt special without being complicated. It became a repeat favorite because the ingredients are familiar, the process is approachable, and the finished dish is worth gathering around the table for. This Flavorlyst version keeps that easygoing spirit.", author: "Flavorlyst Kitchen", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1200&q=85", description: "A fresh, satisfying idea that is easy to make and fun to share.", tags: ["dinner","bbq","flavorlyst"], ingredients: [{q:1,u:"large",n:"flatbread"},{q:1,u:"cup",n:"cooked chicken"},{q:0.5,u:"cup",n:"BBQ sauce"},{q:0.75,u:"cup",n:"shredded mozzarella"},{q:0.25,u:"cup",n:"red onion"}], steps: ["Spread BBQ sauce over the flatbread.","Top with chicken, mozzarella, and red onion.","Bake until the crust is crisp and the cheese melts.","Slice and serve."] },
+
+  { id: "r57", title: "Cinnamon Sugar Popcorn", category: "Snacks", time: 8, difficulty: "Easy", servings: 2,
+    story: "A simple snack can still feel special. This popcorn pairs warm cinnamon with a little sweetness for a quick treat that is easy to make when movie night or an afternoon break calls for something cozy.",
+    author: "Flavorlyst Kitchen", description: "Warm cinnamon sugar popcorn with a light, sweet crunch.",
+    tags: ["snack","popcorn","quick"], ingredients: [{q:6,u:"cup",n:"popcorn"},{q:2,u:"tbsp",n:"butter"},{q:2,u:"tbsp",n:"sugar"},{q:0.5,u:"tsp",n:"cinnamon"},{q:1,u:"pinch",n:"salt"}],
+    steps: ["Melt the butter and drizzle it over the popcorn.","Mix sugar, cinnamon, and salt.","Toss the popcorn with the cinnamon sugar mixture.","Serve while warm."]
+  },
+  { id: "r58", title: "Apple Cinnamon Snack Bites", category: "Snacks", time: 15, difficulty: "Easy", servings: 2,
+    story: "These little bites were inspired by the classic combination of apples and cinnamon. They are designed for a quick snack that feels homemade without requiring a complicated recipe.",
+    author: "Flavorlyst Kitchen", description: "Soft apple and oat bites with cozy cinnamon flavor.",
+    tags: ["snack","apple","oat"], ingredients: [{q:1,u:"",n:"apple"},{q:1,u:"cup",n:"rolled oats"},{q:1,u:"tbsp",n:"honey"},{q:0.5,u:"tsp",n:"cinnamon"},{q:1,u:"tbsp",n:"butter"}],
+    steps: ["Finely dice the apple.","Mix the apple, oats, honey, cinnamon, and melted butter.","Shape the mixture into small bites.","Bake until lightly golden and set."]
+  },
+  { id: "r59", title: "Cheesy Tortilla Crisps", category: "Snacks", time: 12, difficulty: "Easy", servings: 2,
+    story: "This snack turns a few everyday ingredients into crisp, cheesy bites. It is the kind of recipe that works whenever you want something warm and crunchy without a long cooking session.",
+    author: "Flavorlyst Kitchen", description: "Crispy tortilla pieces covered with melted cheese.",
+    tags: ["snack","cheese","quick"], ingredients: [{q:2,u:"large",n:"flour tortillas"},{q:0.75,u:"cup",n:"shredded cheese"},{q:1,u:"tbsp",n:"olive oil"},{q:0.5,u:"tsp",n:"paprika"}],
+    steps: ["Cut the tortillas into small pieces.","Toss with olive oil and paprika.","Arrange on a baking sheet and sprinkle with cheese.","Bake until crisp and the cheese melts."]
+  },
+  { id: "r60", title: "Chocolate Chip Cookies", category: "Desserts", time: 25, difficulty: "Easy", servings: 12,
+    story: "Few desserts are as recognizable as a warm chocolate chip cookie. This Flavorlyst version keeps the process straightforward, with crisp edges, a soft center, and plenty of chocolate chips.",
+    author: "Flavorlyst Kitchen", description: "Classic chocolate chip cookies with golden edges.",
+    tags: ["dessert","cookie","chocolate"], ingredients: [{q:1.5,u:"cup",n:"flour"},{q:0.5,u:"cup",n:"butter"},{q:0.5,u:"cup",n:"brown sugar"},{q:1,u:"large",n:"egg"},{q:1,u:"cup",n:"chocolate chips"}],
+    steps: ["Cream the butter and brown sugar together.","Mix in the egg and flour.","Fold in the chocolate chips.","Scoop onto a baking sheet and bake until the edges are golden."]
+  },
+  { id: "r61", title: "Berry Yogurt Bark", category: "Desserts", time: 10, difficulty: "Easy", servings: 4,
+    story: "Yogurt bark is a freezer-friendly dessert that turns a few simple ingredients into something fun to break apart and share. Berries add bright flavor while a little honey brings everything together.",
+    author: "Flavorlyst Kitchen", description: "Frozen yogurt bark with berries and a touch of honey.",
+    tags: ["dessert","berry","yogurt"], ingredients: [{q:2,u:"cup",n:"Greek yogurt"},{q:1,u:"cup",n:"berries"},{q:2,u:"tbsp",n:"honey"},{q:0.25,u:"cup",n:"granola"}],
+    steps: ["Spread the yogurt in an even layer on a lined tray.","Drizzle with honey and scatter berries and granola over the top.","Freeze until firm.","Break into pieces and serve cold."]
+  },
+  { id: "r62", title: "Mini Chocolate Brownies", category: "Desserts", time: 30, difficulty: "Medium", servings: 9,
+    story: "These brownies are built for the classic chocolate-dessert craving: rich cocoa flavor, a tender center, and a simple baking process that makes a small batch.",
+    author: "Flavorlyst Kitchen", description: "Small-batch chocolate brownies with a rich, fudgy center.",
+    tags: ["dessert","brownie","chocolate"], ingredients: [{q:0.5,u:"cup",n:"flour"},{q:0.5,u:"cup",n:"sugar"},{q:0.25,u:"cup",n:"cocoa powder"},{q:0.25,u:"cup",n:"butter"},{q:1,u:"large",n:"egg"}],
+    steps: ["Melt the butter and let it cool slightly.","Whisk in the sugar and egg.","Stir in the flour and cocoa powder.","Spread in a small pan and bake until just set."]
+  },
+  { id: "r63", title: "Strawberry Shortcake Cups", category: "Desserts", time: 20, difficulty: "Easy", servings: 4,
+    story: "Strawberry shortcake is a celebration of simple layers. These individual cups combine tender cake, juicy strawberries, and a creamy topping for a dessert that looks special without being complicated.",
+    author: "Flavorlyst Kitchen", description: "Layered strawberry shortcake served in individual cups.",
+    tags: ["dessert","strawberry","cake"], ingredients: [{q:2,u:"cup",n:"strawberries"},{q:2,u:"cup",n:"shortcake"},{q:1,u:"cup",n:"whipped cream"},{q:1,u:"tbsp",n:"sugar"}],
+    steps: ["Slice the strawberries and toss them with sugar.","Cut the shortcake into small pieces.","Layer shortcake, strawberries, and whipped cream in cups.","Repeat the layers and serve chilled."]
+  },
+  { id: "r64", title: "Cinnamon Apple Crisp", category: "Desserts", time: 40, difficulty: "Easy", servings: 6,
+    story: "Apple crisp is the kind of dessert that fills the kitchen with the smell of cinnamon and baked fruit. This version keeps the topping simple so the apples stay the star of the dish.",
+    author: "Flavorlyst Kitchen", description: "Baked cinnamon apples beneath a golden oat topping.",
+    tags: ["dessert","apple","cinnamon"], ingredients: [{q:4,u:"",n:"apples"},{q:1,u:"cup",n:"rolled oats"},{q:0.5,u:"cup",n:"flour"},{q:0.5,u:"cup",n:"brown sugar"},{q:0.5,u:"cup",n:"butter"},{q:1,u:"tsp",n:"cinnamon"}],
+    steps: ["Slice the apples and toss them with cinnamon.","Mix oats, flour, brown sugar, and butter into a crumbly topping.","Spread the apples in a baking dish and cover with the topping.","Bake until the apples are tender and the topping is golden."]
+  },
 ];
 
 const curatedStarterRecipeImages = {
@@ -168,6 +217,14 @@ const curatedStarterRecipeImages = {
 };
 
 const recipeImageChoices = [
+  { words: /popcorn/i, image: "https://images.unsplash.com/photo-1585647347483-22bd5dace89a?auto=format&fit=crop&w=1200&q=85" },
+  { words: /snack.*apple|apple.*snack/i, image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=1200&q=85" },
+  { words: /tortilla crisp|cheesy crisp/i, image: "https://images.unsplash.com/photo-1552332386-f8dd00dc8f85?auto=format&fit=crop&w=1200&q=85" },
+  { words: /chocolate chip cookie|cookie/i, image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85" },
+  { words: /yogurt bark|berry bark/i, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=85" },
+  { words: /brownie/i, image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=1200&q=85" },
+  { words: /strawberry shortcake/i, image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=1200&q=85" },
+  { words: /apple crisp/i, image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=85" },
   { words: /strawberry.*chia|chia.*pudding/i, image: "https://images.unsplash.com/photo-1618798513386-fedeb5c30d39?auto=format&fit=crop&w=1200&q=85" },
   { words: /berry.*breakfast|breakfast.*berry/i, image: "https://images.unsplash.com/photo-1623052935410-3fca63f73e10?auto=format&fit=crop&w=1200&q=85" },
   { words: /french toast/i, image: "https://images.unsplash.com/photo-1740555274750-2ced1ce0fdf3?auto=format&fit=crop&w=1200&q=85" },
@@ -242,7 +299,7 @@ function normalizeRecipe(recipe) {
     ...recipe,
     title,
     description: String(recipe.description || ""),
-    category: ["Breakfast","Lunch","Dinner"].includes(recipe.category) ? recipe.category : "Dinner",
+    category: ["Breakfast","Lunch","Dinner","Snacks","Desserts"].includes(recipe.category) ? recipe.category : "Dinner",
     time: Math.max(1, Number(recipe.time) || 30),
     difficulty: ["Easy","Medium","Hard"].includes(recipe.difficulty) ? recipe.difficulty : "Easy",
     servings: Math.max(1, Number(recipe.servings) || 2),
@@ -321,7 +378,7 @@ function App() {
   }, []);
 
   
-  const categories = ["All","Breakfast","Lunch","Dinner"];
+  const categories = ["All","Breakfast","Lunch","Dinner","Snacks","Desserts"];
   const filtered = useMemo(() => {
     let result = recipes.filter(r => {
       const q = search.toLowerCase().trim();
@@ -402,7 +459,7 @@ function App() {
   };
 
   const buildRecipeStory = (title, category) => {
-    const meal = category === "Breakfast" ? "morning" : category === "Lunch" ? "midday" : "dinner";
+    const meal = category === "Breakfast" ? "morning" : category === "Lunch" ? "midday" : category === "Snacks" ? "snack break" : category === "Desserts" ? "dessert" : "dinner";
     return `This Flavorlyst recipe, ${title}, was made for a ${meal} when you want something delicious without overcomplicating the kitchen. It brings familiar ingredients together in a simple way that is easy to make, share, and remember.`;
   };
 
@@ -512,7 +569,7 @@ function App() {
         <div className="recipe-layout"><div><section className="recipe-card story-card"><span className="eyebrow dark">THE STORY BEHIND IT</span><h2>A little history with your meal</h2><p>{selectedRecipe.story || `Every recipe has a story. This one was created by ${selectedRecipe.author || "a home cook"} and shared with the Flavorlyst community as a recipe worth passing along.`}</p></section><section className="recipe-card"><div className="card-head"><h2>Ingredients</h2></div><div className="servings"><span>Servings</span><button onClick={()=>setServings(Math.max(1,servings-1))}>−</button><b>{servings}</b><button onClick={()=>setServings(servings+1)}>＋</button><small>Scaled automatically</small></div><ul className="ingredients">{scaledIngredients.map((i,idx)=><li key={idx}><b>{Number.isInteger(i.q)?i.q:i.q.toFixed(1)}</b><span>{i.u}</span><span>{i.n}</span></li>)}</ul></section><section className="recipe-card"><h2>How to make it</h2><div className="steps">{selectedRecipe.steps.map((s,i)=><div className="step" key={i}><span>{i+1}</span><p>{s}</p></div>)}</div></section></div></div>
       </main>}
 
-      {view==="add" && <main className="page narrow"><div className="page-title"><span className="eyebrow dark">CREATE</span><h1>Add your recipe</h1><p>Share something delicious with the community.</p></div><form className="form-card" onSubmit={createRecipe}><label>Recipe title<input required value={newRecipe.title} onChange={e=>setNewRecipe({...newRecipe,title:e.target.value})} placeholder="e.g. Grandma's Sunday Lasagna"/></label><label>Recipe photo URL <small>Optional — leave blank and Flavorlyst will choose a food photo automatically.</small><input value={newRecipe.image} onChange={e=>setNewRecipe({...newRecipe,image:e.target.value})} placeholder="Optional: paste an Unsplash food-image URL"/></label><div className="two"><label>Category<select value={newRecipe.category} onChange={e=>setNewRecipe({...newRecipe,category:e.target.value})}><option>Breakfast</option><option>Lunch</option><option>Dinner</option></select></label><label>Difficulty<select value={newRecipe.difficulty} onChange={e=>setNewRecipe({...newRecipe,difficulty:e.target.value})}><option>Easy</option><option>Medium</option><option>Hard</option></select></label><label>Cooking time (minutes)<input type="number" min="1" max="600" value={newRecipe.time} onChange={e=>setNewRecipe({...newRecipe,time:e.target.value})}/></label><label>Servings<input type="number" min="1" value={newRecipe.servings} onChange={e=>setNewRecipe({...newRecipe,servings:e.target.value})}/></label></div><label>Description<textarea value={newRecipe.description} onChange={e=>setNewRecipe({...newRecipe,description:e.target.value})} placeholder="What makes this recipe special?"/></label><label>Ingredients <small>One per line: quantity | unit | ingredient</small><textarea required value={newRecipe.ingredients} onChange={e=>setNewRecipe({...newRecipe,ingredients:e.target.value})} placeholder={"2 | cups | flour\n1 | tsp | salt\n3 | | eggs"}/></label><label>Steps <small>One step per line</small><textarea required value={newRecipe.steps} onChange={e=>setNewRecipe({...newRecipe,steps:e.target.value})} placeholder={"Mix the ingredients.\nBake until golden.\nServe warm."}/></label><button className="primary big" type="submit" disabled={aiStatus==="Checking recipe…"}>{aiStatus==="Checking recipe…" ? "Checking recipe…" : "✓ Check recipe & publish"}</button>{aiStatus && <p className="ai-status">{aiStatus}</p>}</form></main>}
+      {view==="add" && <main className="page narrow"><div className="page-title"><span className="eyebrow dark">CREATE</span><h1>Add your recipe</h1><p>Share something delicious with the community.</p></div><form className="form-card" onSubmit={createRecipe}><label>Recipe title<input required value={newRecipe.title} onChange={e=>setNewRecipe({...newRecipe,title:e.target.value})} placeholder="e.g. Grandma's Sunday Lasagna"/></label><label>Recipe photo URL <small>Optional — leave blank and Flavorlyst will choose a food photo automatically.</small><input value={newRecipe.image} onChange={e=>setNewRecipe({...newRecipe,image:e.target.value})} placeholder="Optional: paste an Unsplash food-image URL"/></label><div className="two"><label>Category<select value={newRecipe.category} onChange={e=>setNewRecipe({...newRecipe,category:e.target.value})}><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snacks</option><option>Desserts</option></select></label><label>Difficulty<select value={newRecipe.difficulty} onChange={e=>setNewRecipe({...newRecipe,difficulty:e.target.value})}><option>Easy</option><option>Medium</option><option>Hard</option></select></label><label>Cooking time (minutes)<input type="number" min="1" max="600" value={newRecipe.time} onChange={e=>setNewRecipe({...newRecipe,time:e.target.value})}/></label><label>Servings<input type="number" min="1" value={newRecipe.servings} onChange={e=>setNewRecipe({...newRecipe,servings:e.target.value})}/></label></div><label>Description<textarea value={newRecipe.description} onChange={e=>setNewRecipe({...newRecipe,description:e.target.value})} placeholder="What makes this recipe special?"/></label><label>Ingredients <small>One per line: quantity | unit | ingredient</small><textarea required value={newRecipe.ingredients} onChange={e=>setNewRecipe({...newRecipe,ingredients:e.target.value})} placeholder={"2 | cups | flour\n1 | tsp | salt\n3 | | eggs"}/></label><label>Steps <small>One step per line</small><textarea required value={newRecipe.steps} onChange={e=>setNewRecipe({...newRecipe,steps:e.target.value})} placeholder={"Mix the ingredients.\nBake until golden.\nServe warm."}/></label><button className="primary big" type="submit" disabled={aiStatus==="Checking recipe…"}>{aiStatus==="Checking recipe…" ? "Checking recipe…" : "✓ Check recipe & publish"}</button>{aiStatus && <p className="ai-status">{aiStatus}</p>}</form></main>}
 
       {view==="planner" && <main className="page"><div className="page-title"><span className="eyebrow dark">PLAN AHEAD</span><h1>Weekly meal planner</h1><p>Build your week with your favorite recipes.</p></div><div className="planner">{Object.entries(planner).map(([day,id])=><div className="day" key={day}><b>{day}</b>{id ? <div className="planned" style={{backgroundImage:`linear-gradient(0deg,rgba(0,0,0,.62),transparent),url(${recipes.find(r=>r.id===id)?.image || getAutomaticRecipeImage(recipes.find(r=>r.id===id)?.title || "", recipes.find(r=>r.id===id)?.ingredients || [])})`}}><span>{recipes.find(r=>r.id===id)?.title}</span><button onClick={()=>{const next={...planner,[day]:null};update("recipe-planner",next,setPlanner)}}>×</button></div> : <select value="" onChange={e=>{const next={...planner,[day]:e.target.value};update("recipe-planner",next,setPlanner)}}><option value="">＋ Add recipe</option>{recipes.map(r=><option key={r.id} value={r.id}>{r.title}</option>)}</select>}</div>)}</div></main>}
 
