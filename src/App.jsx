@@ -222,8 +222,44 @@ function load(key, fallback) {
 }
 function save(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch {} }
 
+function normalizeRecipe(recipe) {
+  if (!recipe || typeof recipe !== "object") return null;
+  const title = String(recipe.title || "Untitled Recipe").trim();
+  const ingredients = Array.isArray(recipe.ingredients)
+    ? recipe.ingredients.map(i => ({
+        q: Number(i?.q) || 1,
+        u: String(i?.u || ""),
+        n: String(i?.n || "").trim()
+      })).filter(i => i.n)
+    : [];
+  const steps = Array.isArray(recipe.steps)
+    ? recipe.steps.map(s => String(s || "").trim()).filter(Boolean)
+    : [];
+  const tags = Array.isArray(recipe.tags)
+    ? recipe.tags.map(t => String(t || "").toLowerCase().trim()).filter(Boolean)
+    : title.toLowerCase().split(/\s+/).filter(Boolean).slice(0, 4);
+  return {
+    ...recipe,
+    title,
+    description: String(recipe.description || ""),
+    category: ["Breakfast","Lunch","Dinner"].includes(recipe.category) ? recipe.category : "Dinner",
+    time: Math.max(1, Number(recipe.time) || 30),
+    difficulty: ["Easy","Medium","Hard"].includes(recipe.difficulty) ? recipe.difficulty : "Easy",
+    servings: Math.max(1, Number(recipe.servings) || 2),
+    author: String(recipe.author || "Flavorlyst Kitchen"),
+    story: String(recipe.story || ""),
+    tags,
+    ingredients,
+    steps
+  };
+}
+
+function normalizeRecipes(list) {
+  return Array.isArray(list) ? list.map(normalizeRecipe).filter(Boolean) : starterRecipes.map(normalizeRecipe);
+}
+
 function App() {
-  const [recipes, setRecipes] = useState(() => addMissingRecipeImages(load("recipe-recipes", starterRecipes)));
+  const [recipes, setRecipes] = useState(() => normalizeRecipes(addMissingRecipeImages(load("recipe-recipes", starterRecipes))));
   const [favorites, setFavorites] = useState(() => load("recipe-favorites", ["r1","r5"]));
   const [planner, setPlanner] = useState(() => load("recipe-planner", initialPlanner));
   const [view, setView] = useState("home");
@@ -242,7 +278,7 @@ function App() {
   const [aiStatus, setAiStatus] = useState("");
 
   useEffect(() => {
-    const current = load("recipe-recipes", starterRecipes);
+    const current = normalizeRecipes(load("recipe-recipes", starterRecipes));
     const upgraded = addMissingRecipeImages(current);
     if (JSON.stringify(upgraded) !== JSON.stringify(current)) {
       save("recipe-recipes", upgraded);
@@ -255,7 +291,7 @@ function App() {
   const filtered = useMemo(() => {
     let result = recipes.filter(r => {
       const q = search.toLowerCase().trim();
-      const matchesText = !q || r.title.toLowerCase().includes(q) || r.tags.some(t => t.includes(q)) || r.ingredients.some(i => i.n.toLowerCase().includes(q));
+      const matchesText = !q || r.title.toLowerCase().includes(q) || (r.tags || []).some(t => t.includes(q)) || (r.ingredients || []).some(i => i.n.toLowerCase().includes(q));
       const matchesCategory = category === "All" || r.category === category;
       const matchesTime = timeFilter === "Any" || (timeFilter === "15 min or less" ? r.time <= 15 : timeFilter === "30 min or less" ? r.time <= 30 : r.time <= 60);
       const matchesDifficulty = difficultyFilter === "Any" || r.difficulty === difficultyFilter;
