@@ -263,6 +263,7 @@ function App() {
   const [favorites, setFavorites] = useState(() => load("recipe-favorites", ["r1","r5"]));
   const [planner, setPlanner] = useState(() => load("recipe-planner", initialPlanner));
   const [view, setView] = useState("home");
+  const [previousView, setPreviousView] = useState("home");
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
@@ -273,9 +274,19 @@ function App() {
   const [showFilters, setShowFilters] = useState(false);
   const [servings, setServings] = useState(2);
   const [showInstall, setShowInstall] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
   const [darkMode, setDarkMode] = useState(() => load("flavorlyst-dark-mode", false));
   const [newRecipe, setNewRecipe] = useState({title:"",description:"",category:"Dinner",time:30,servings:2,image:"",ingredients:"",steps:""});
   const [aiStatus, setAiStatus] = useState("");
+
+  useEffect(() => {
+    const handleInstallPrompt = e => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleInstallPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", handleInstallPrompt);
+  }, []);
 
   useEffect(() => {
     const current = normalizeRecipes(load("recipe-recipes", starterRecipes));
@@ -462,7 +473,7 @@ function App() {
       <header className="topbar">
         <button className="brand" onClick={()=>setView("home")}><span className="brand-mark">✦</span><span>Flavor<span className="brand-accent">lyst</span></span></button>
         <div className="desktop-search"><span>⌕</span><input value={search} onChange={e=>{setSearch(e.target.value);setView("explore")}} placeholder="Search recipes, ingredients..." /></div>
-<button className="theme-btn" onClick={() => { const next = !darkMode; setDarkMode(next); save("flavorlyst-dark-mode", next); }} aria-label="Toggle dark mode">{darkMode ? "☀" : "☾"}</button><button className="install-btn" onClick={()=>setShowInstall(true)}>Install App</button>
+<button className="theme-btn" onClick={() => { const next = !darkMode; setDarkMode(next); save("flavorlyst-dark-mode", next); }} aria-label="Toggle dark mode">{darkMode ? "☀" : "☾"}</button><button className="install-btn" onClick={async ()=>{ if(installPrompt){ installPrompt.prompt(); await installPrompt.userChoice.catch(()=>{}); setInstallPrompt(null); } else { setShowInstall(true); } }}>Install App</button>
       </header>
 
       {view==="home" && <main className="home-page">
@@ -501,7 +512,7 @@ function App() {
 
       {view==="saved" && <main className="page"><div className="page-title"><span className="eyebrow dark">YOUR COLLECTION</span><h1>Saved recipes</h1><p>Your favorites, all in one place.</p></div><RecipeGrid recipes={recipes.filter(r=>favorites.includes(r.id))} onOpen={openRecipe} favorites={favorites} onFavorite={toggleFavorite}/></main>}
 
-      {showInstall && <div className="modal-wrap" onClick={()=>setShowInstall(false)}><div className="modal" onClick={e=>e.stopPropagation()}><button className="modal-x" onClick={()=>setShowInstall(false)}>×</button><div className="install-icon">✦</div><h2>Install Flavorlyst</h2><p>Use your browser's <b>Add to Home Screen</b> option to keep your recipe app handy. On supported browsers, use the install button in the address bar.</p><button className="primary full" onClick={()=>setShowInstall(false)}>Got it</button></div></div>}
+      {showInstall && <div className="modal-wrap" onClick={()=>setShowInstall(false)}><div className="modal" onClick={e=>e.stopPropagation()}><button className="modal-x" onClick={()=>setShowInstall(false)}>×</button><div className="install-icon">✦</div><h2>Install Flavorlyst</h2><p>{installPrompt ? "Flavorlyst can be installed as an app on this device." : <>Use your browser's <b>Add to Home Screen</b> option to keep your recipe app handy. On supported browsers, use the install button in the address bar.</>}</p>{installPrompt ? <button className="primary full" onClick={async ()=>{ const prompt=installPrompt; setShowInstall(false); prompt.prompt(); await prompt.userChoice.catch(()=>{}); setInstallPrompt(null); }}>Install Flavorlyst</button> : <button className="primary full" onClick={()=>setShowInstall(false)}>Got it</button>}</div></div>}
 
 
       <nav className="bottom-nav"><Nav icon="⌂" label="Home" active={view==="home"} onClick={()=>setView("home")}/><Nav icon="⌕" label="Explore" active={view==="explore"} onClick={()=>setView("explore")}/><button className="add-nav" onClick={()=>setView("add")}>＋</button><Nav icon="▣" label="Planner" active={view==="planner"} onClick={()=>setView("planner")}/><Nav icon="♡" label="Saved" active={view==="saved"} onClick={()=>setView("saved")}/></nav>
