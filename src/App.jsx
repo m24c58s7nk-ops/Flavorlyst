@@ -541,7 +541,7 @@ function App() {
     <div className={darkMode ? "app dark-mode" : "app"}>
       <header className="topbar">
         <button className="brand" onClick={()=>setView("home")}><span className="brand-mark">✦</span><span>Flavor<span className="brand-accent">lyst</span></span></button>
-        <div className="desktop-search"><span>⌕</span><input value={search} onChange={e=>{setSearch(e.target.value);setView("explore")}} placeholder="Search recipes, ingredients..." /></div>
+        <div className="desktop-search"><span aria-hidden="true">⌕</span><input aria-label="Search recipes and ingredients" value={search} onChange={e=>{setSearch(e.target.value);setView("explore")}} placeholder="Search recipes, ingredients..." /></div>
 <button className="theme-btn" onClick={() => { const next = !darkMode; setDarkMode(next); save("flavorlyst-dark-mode", next); }} aria-label="Toggle dark mode">{darkMode ? "☀" : "☾"}</button><button className="install-btn" onClick={async ()=>{ if(installPrompt){ installPrompt.prompt(); await installPrompt.userChoice.catch(()=>{}); setInstallPrompt(null); } else { setShowInstall(true); } }}>Install App</button>
       </header>
 
@@ -591,13 +591,13 @@ function App() {
 
 function Nav({icon,label,active,onClick}) { return <button className={active?"nav-item active":"nav-item"} onClick={onClick}><span>{icon}</span><small>{label}</small></button>; }
 
-function RecipeBackground({image, fallback, className, children}) {
+function RecipeBackground({image, fallback, className, gradient, children}) {
   const [src, setSrc] = useState(image || fallback);
   useEffect(() => {
     setSrc(image || fallback);
   }, [image, fallback]);
   return (
-    <div className={className} style={{backgroundImage:`linear-gradient(0deg,rgba(8,12,10,.78),rgba(8,12,10,.05)),url("${src}")`}}>
+    <div className={className} style={{backgroundImage:`${gradient || "linear-gradient(0deg,rgba(8,12,10,.78),rgba(8,12,10,.05))"},url("${src}")`}}>
       <img src={image || fallback} alt="" aria-hidden="true" style={{display:"none"}} onError={() => setSrc(fallback)} />
       {children}
     </div>
