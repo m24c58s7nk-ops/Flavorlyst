@@ -1,5 +1,5 @@
 const BASE = self.location.pathname.replace(/\/sw\.js$/, "/");
-const CACHE = "flavorlyst-v4";
+const CACHE = "flavorlyst-v5";
 const APP_SHELL = [BASE, BASE + "index.html"];
 
 self.addEventListener("install", event => {
