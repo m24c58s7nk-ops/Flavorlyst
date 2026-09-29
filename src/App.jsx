@@ -284,6 +284,23 @@ function App() {
       save("recipe-recipes", upgraded);
       setRecipes(upgraded);
     }
+
+    const validIds = new Set(upgraded.map(r => r.id));
+    const storedFavorites = load("recipe-favorites", ["r1","r5"]);
+    const cleanFavorites = Array.isArray(storedFavorites) ? storedFavorites.filter(id => validIds.has(id)) : [];
+    if (JSON.stringify(cleanFavorites) !== JSON.stringify(storedFavorites)) {
+      save("recipe-favorites", cleanFavorites);
+      setFavorites(cleanFavorites);
+    }
+
+    const storedPlanner = load("recipe-planner", initialPlanner);
+    const cleanPlanner = storedPlanner && typeof storedPlanner === "object"
+      ? Object.fromEntries(Object.entries(storedPlanner).map(([day,id]) => [day, validIds.has(id) ? id : null]))
+      : initialPlanner;
+    if (JSON.stringify(cleanPlanner) !== JSON.stringify(storedPlanner)) {
+      save("recipe-planner", cleanPlanner);
+      setPlanner(cleanPlanner);
+    }
   }, []);
 
   
@@ -310,6 +327,15 @@ function App() {
 
   const suggestions = useMemo(() => recipes.filter(r => !favorites.includes(r.id)).slice(0,4), [recipes, favorites]);
   const selectedRecipe = recipes.find(r => r.id === selected);
+
+  const openRecipe = (id) => {
+    const recipe = recipes.find(r => r.id === id);
+    if (!recipe) return;
+    setPreviousView(view);
+    setSelected(id);
+    setServings(recipe.servings);
+    setView("recipe");
+  };
 
   const update = (key, value, setter) => { setter(value); save(key,value); };
   const toggleFavorite = id => {
@@ -422,6 +448,7 @@ function App() {
     update("recipe-recipes",next,setRecipes);
     setNewRecipe({title:"",description:"",category:"Dinner",time:30,servings:2,image:"",ingredients:"",steps:""});
     setAiStatus("");
+    setPreviousView("add");
     setSelected(recipe.id);
     setServings(recipe.servings);
     setView("recipe");
@@ -444,9 +471,9 @@ function App() {
         </section>
         <section className="section"><div className="section-head"><div><span className="eyebrow dark">DISCOVER</span><h2>What are you craving?</h2></div><button className="text-btn" onClick={()=>setView("explore")}>See all →</button></div>
           <div className="chips">{categories.map(c=><button className={category===c?"chip active":"chip"} key={c} onClick={()=>{setCategory(c);setView("explore")}}>{c}</button>)}</div>
-          <RecipeGrid recipes={filtered.slice(0,4)} onOpen={id=>{setSelected(id);setServings(recipes.find(r=>r.id===id).servings);setView("recipe")}} favorites={favorites} onFavorite={toggleFavorite}/>
+          <RecipeGrid recipes={filtered.slice(0,4)} onOpen={openRecipe} favorites={favorites} onFavorite={toggleFavorite}/>
         </section>
-        <section className="section soft"><div className="section-head"><div><span className="eyebrow dark">PERSONALIZED</span><h2>Picked for you</h2></div></div><RecipeGrid recipes={suggestions} onOpen={id=>{setSelected(id);setView("recipe")}} favorites={favorites} onFavorite={toggleFavorite}/></section>
+        <section className="section soft"><div className="section-head"><div><span className="eyebrow dark">PERSONALIZED</span><h2>Picked for you</h2></div></div><RecipeGrid recipes={suggestions} onOpen={openRecipe} favorites={favorites} onFavorite={toggleFavorite}/></section>
       </main>}
 
       {view==="explore" && <main className="page explore-page">
@@ -460,11 +487,11 @@ function App() {
           <label>Sort by<select value={sortFilter} onChange={e=>setSortFilter(e.target.value)}><option>Recommended</option><option>Quickest</option><option>Newest</option></select></label>
           <button className="clear-filters" onClick={()=>{setCategory("All");setTimeFilter("Any");setDifficultyFilter("Any");setDietFilter("All");setSortFilter("Recommended");setSearch("");}}>Clear all</button>
         </div>}
-        <RecipeGrid recipes={filtered} onOpen={id=>{setSelected(id);setServings(recipes.find(r=>r.id===id).servings);setView("recipe")}} favorites={favorites} onFavorite={toggleFavorite}/>
+        <RecipeGrid recipes={filtered} onOpen={openRecipe} favorites={favorites} onFavorite={toggleFavorite}/>
       </main>}
 
       {view==="recipe" && selectedRecipe && <main className="recipe-page">
-        <div className="recipe-cover" style={{backgroundImage:`linear-gradient(0deg,rgba(8,12,10,.78),rgba(8,12,10,.05)),url(${selectedRecipe.image || getAutomaticRecipeImage(selectedRecipe.title, selectedRecipe.ingredients || [])})`}}><button className="back" onClick={()=>setView("home")}>← Back</button><div className="cover-bottom"><span className="pill">{selectedRecipe.category}</span><h1>{selectedRecipe.title}</h1><p>By {selectedRecipe.author}</p></div></div>
+        <div className="recipe-cover" style={{backgroundImage:`linear-gradient(0deg,rgba(8,12,10,.78),rgba(8,12,10,.05)),url(${selectedRecipe.image || getAutomaticRecipeImage(selectedRecipe.title, selectedRecipe.ingredients || [])})`}}><button className="back" onClick={()=>setView(previousView)}>← Back</button><div className="cover-bottom"><span className="pill">{selectedRecipe.category}</span><h1>{selectedRecipe.title}</h1><p>By {selectedRecipe.author}</p></div></div>
         <div className="recipe-layout"><div><section className="recipe-card story-card"><span className="eyebrow dark">THE STORY BEHIND IT</span><h2>A little history with your meal</h2><p>{selectedRecipe.story || `Every recipe has a story. This one was created by ${selectedRecipe.author || "a home cook"} and shared with the Flavorlyst community as a recipe worth passing along.`}</p></section><section className="recipe-card"><div className="card-head"><h2>Ingredients</h2></div><div className="servings"><span>Servings</span><button onClick={()=>setServings(Math.max(1,servings-1))}>−</button><b>{servings}</b><button onClick={()=>setServings(servings+1)}>＋</button><small>Scaled automatically</small></div><ul className="ingredients">{scaledIngredients.map((i,idx)=><li key={idx}><b>{Number.isInteger(i.q)?i.q:i.q.toFixed(1)}</b><span>{i.u}</span><span>{i.n}</span></li>)}</ul></section><section className="recipe-card"><h2>How to make it</h2><div className="steps">{selectedRecipe.steps.map((s,i)=><div className="step" key={i}><span>{i+1}</span><p>{s}</p></div>)}</div></section></div></div>
       </main>}
 
@@ -472,7 +499,7 @@ function App() {
 
       {view==="planner" && <main className="page"><div className="page-title"><span className="eyebrow dark">PLAN AHEAD</span><h1>Weekly meal planner</h1><p>Build your week with your favorite recipes.</p></div><div className="planner">{Object.entries(planner).map(([day,id])=><div className="day" key={day}><b>{day}</b>{id ? <div className="planned" style={{backgroundImage:`linear-gradient(0deg,rgba(0,0,0,.62),transparent),url(${recipes.find(r=>r.id===id)?.image || getAutomaticRecipeImage(recipes.find(r=>r.id===id)?.title || "", recipes.find(r=>r.id===id)?.ingredients || [])})`}}><span>{recipes.find(r=>r.id===id)?.title}</span><button onClick={()=>{const next={...planner,[day]:null};update("recipe-planner",next,setPlanner)}}>×</button></div> : <select value="" onChange={e=>{const next={...planner,[day]:e.target.value};update("recipe-planner",next,setPlanner)}}><option value="">＋ Add recipe</option>{recipes.map(r=><option key={r.id} value={r.id}>{r.title}</option>)}</select>}</div>)}</div></main>}
 
-      {view==="saved" && <main className="page"><div className="page-title"><span className="eyebrow dark">YOUR COLLECTION</span><h1>Saved recipes</h1><p>Your favorites, all in one place.</p></div><RecipeGrid recipes={recipes.filter(r=>favorites.includes(r.id))} onOpen={id=>{setSelected(id);setServings(recipes.find(r=>r.id===id).servings);setView("recipe")}} favorites={favorites} onFavorite={toggleFavorite}/></main>}
+      {view==="saved" && <main className="page"><div className="page-title"><span className="eyebrow dark">YOUR COLLECTION</span><h1>Saved recipes</h1><p>Your favorites, all in one place.</p></div><RecipeGrid recipes={recipes.filter(r=>favorites.includes(r.id))} onOpen={openRecipe} favorites={favorites} onFavorite={toggleFavorite}/></main>}
 
       {showInstall && <div className="modal-wrap" onClick={()=>setShowInstall(false)}><div className="modal" onClick={e=>e.stopPropagation()}><button className="modal-x" onClick={()=>setShowInstall(false)}>×</button><div className="install-icon">✦</div><h2>Install Flavorlyst</h2><p>Use your browser's <b>Add to Home Screen</b> option to keep your recipe app handy. On supported browsers, use the install button in the address bar.</p><button className="primary full" onClick={()=>setShowInstall(false)}>Got it</button></div></div>}
 
