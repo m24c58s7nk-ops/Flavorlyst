@@ -99,3 +99,17 @@
   color: #dbe5dc;
 }
 
+/* Dark mode control/readability fixes */
+.dark-mode .chip { background:#222b24; color:#c8d1ca; }
+.dark-mode .chip.active { background:#d8e6d8; color:#18211c; }
+.dark-mode .text-btn,.dark-mode .clear-filters { color:#e5a866; }
+.dark-mode .tile-meta { color:#aeb8af; }
+.dark-mode .heart { color:#e5a866; }
+.dark-mode .servings { background:#222b24; }
+.dark-mode .servings button { background:#19201b; color:#f1f3ef; border:1px solid #344039; }
+.dark-mode .ingredients li { border-color:#344039; }
+.dark-mode .day select { background:#222b24; color:#f1f3ef; border-color:#344039; }
+.dark-mode .empty { background:#19201b; color:#aeb8af; border-color:#4a584f; }
+.dark-mode .back { background:rgba(0,0,0,.55); color:#fff; }
+.dark-mode .theme-btn { background:#19201b; border-color:#344039; }
+.dark-mode .install-btn { background:#d8e6d8; color:#18211c; }
