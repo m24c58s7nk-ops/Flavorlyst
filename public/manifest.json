@@ -1,14 +1,14 @@
 {
   "name":"Flavorlyst Recipes",
   "short_name":"Flavorlyst",
-  "start_url":"/codespaces-react/",
-  "scope":"/codespaces-react/",
+  "start_url":"/Flavorlyst/",
+  "scope":"/Flavorlyst/",
   "display":"standalone",
   "background_color":"#f7f5f0",
   "theme_color":"#263d2d",
   "description":"Discover, create, plan, and save delicious recipes.",
   "icons":[
-    {"src":"/codespaces-react/logo192.png","sizes":"192x192","type":"image/png"},
-    {"src":"/codespaces-react/logo512.png","sizes":"512x512","type":"image/png"}
+    {"src":"/Flavorlyst/logo192.png","sizes":"192x192","type":"image/png"},
+    {"src":"/Flavorlyst/logo512.png","sizes":"512x512","type":"image/png"}
   ]
 }
