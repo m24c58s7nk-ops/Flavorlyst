@@ -260,8 +260,14 @@ function normalizeRecipes(list) {
 
 function App() {
   const [recipes, setRecipes] = useState(() => normalizeRecipes(addMissingRecipeImages(load("recipe-recipes", starterRecipes))));
-  const [favorites, setFavorites] = useState(() => load("recipe-favorites", ["r1","r5"]));
-  const [planner, setPlanner] = useState(() => load("recipe-planner", initialPlanner));
+  const [favorites, setFavorites] = useState(() => {
+    const value = load("recipe-favorites", ["r1","r5"]);
+    return Array.isArray(value) ? value : ["r1","r5"];
+  });
+  const [planner, setPlanner] = useState(() => {
+    const value = load("recipe-planner", initialPlanner);
+    return value && typeof value === "object" && !Array.isArray(value) ? value : initialPlanner;
+  });
   const [view, setView] = useState("home");
   const [previousView, setPreviousView] = useState("home");
   const [selected, setSelected] = useState(null);
@@ -275,8 +281,8 @@ function App() {
   const [servings, setServings] = useState(2);
   const [showInstall, setShowInstall] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
-  const [darkMode, setDarkMode] = useState(() => load("flavorlyst-dark-mode", false));
-  const [newRecipe, setNewRecipe] = useState({title:"",description:"",category:"Dinner",time:30,servings:2,image:"",ingredients:"",steps:""});
+  const [darkMode, setDarkMode] = useState(() => Boolean(load("flavorlyst-dark-mode", false)));
+  const [newRecipe, setNewRecipe] = useState({title:"",description:"",category:"Dinner",time:30,difficulty:"Easy",servings:2,image:"",ingredients:"",steps:""});
   const [aiStatus, setAiStatus] = useState("");
 
   useEffect(() => {
@@ -386,7 +392,7 @@ function App() {
       description,
       category: recipe.category,
       time: Number(recipe.time) || 30,
-      difficulty: "Easy",
+      difficulty: ["Easy","Medium","Hard"].includes(recipe.difficulty) ? recipe.difficulty : "Easy",
       servings: Number(recipe.servings) || 2,
       story: buildRecipeStory(polishedTitle, recipe.category),
       tags: titleWords.slice(0, 4),
@@ -457,7 +463,7 @@ function App() {
 
     const next=[recipe,...recipes];
     update("recipe-recipes",next,setRecipes);
-    setNewRecipe({title:"",description:"",category:"Dinner",time:30,servings:2,image:"",ingredients:"",steps:""});
+    setNewRecipe({title:"",description:"",category:"Dinner",time:30,difficulty:"Easy",servings:2,image:"",ingredients:"",steps:""});
     setAiStatus("");
     setPreviousView("add");
     setSelected(recipe.id);
@@ -467,7 +473,7 @@ function App() {
 
   const scaledIngredients = selectedRecipe?.ingredients.map(i => ({...i, q:i.q*(servings/selectedRecipe.servings)}));
 
-  const hero = recipes[0];
+  const hero = recipes[0] || starterRecipes[0];
   return (
     <div className={darkMode ? "app dark-mode" : "app"}>
       <header className="topbar">
@@ -506,7 +512,7 @@ function App() {
         <div className="recipe-layout"><div><section className="recipe-card story-card"><span className="eyebrow dark">THE STORY BEHIND IT</span><h2>A little history with your meal</h2><p>{selectedRecipe.story || `Every recipe has a story. This one was created by ${selectedRecipe.author || "a home cook"} and shared with the Flavorlyst community as a recipe worth passing along.`}</p></section><section className="recipe-card"><div className="card-head"><h2>Ingredients</h2></div><div className="servings"><span>Servings</span><button onClick={()=>setServings(Math.max(1,servings-1))}>−</button><b>{servings}</b><button onClick={()=>setServings(servings+1)}>＋</button><small>Scaled automatically</small></div><ul className="ingredients">{scaledIngredients.map((i,idx)=><li key={idx}><b>{Number.isInteger(i.q)?i.q:i.q.toFixed(1)}</b><span>{i.u}</span><span>{i.n}</span></li>)}</ul></section><section className="recipe-card"><h2>How to make it</h2><div className="steps">{selectedRecipe.steps.map((s,i)=><div className="step" key={i}><span>{i+1}</span><p>{s}</p></div>)}</div></section></div></div>
       </main>}
 
-      {view==="add" && <main className="page narrow"><div className="page-title"><span className="eyebrow dark">CREATE</span><h1>Add your recipe</h1><p>Share something delicious with the community.</p></div><form className="form-card" onSubmit={createRecipe}><label>Recipe title<input required value={newRecipe.title} onChange={e=>setNewRecipe({...newRecipe,title:e.target.value})} placeholder="e.g. Grandma's Sunday Lasagna"/></label><label>Recipe photo URL <small>Optional — leave blank and Flavorlyst will choose a food photo automatically.</small><input value={newRecipe.image} onChange={e=>setNewRecipe({...newRecipe,image:e.target.value})} placeholder="Optional: paste an Unsplash food-image URL"/></label><div className="two"><label>Category<select value={newRecipe.category} onChange={e=>setNewRecipe({...newRecipe,category:e.target.value})}><option>Breakfast</option><option>Lunch</option><option>Dinner</option></select></label><label>Servings<input type="number" min="1" value={newRecipe.servings} onChange={e=>setNewRecipe({...newRecipe,servings:e.target.value})}/></label></div><label>Description<textarea value={newRecipe.description} onChange={e=>setNewRecipe({...newRecipe,description:e.target.value})} placeholder="What makes this recipe special?"/></label><label>Ingredients <small>One per line: quantity | unit | ingredient</small><textarea required value={newRecipe.ingredients} onChange={e=>setNewRecipe({...newRecipe,ingredients:e.target.value})} placeholder={"2 | cups | flour\n1 | tsp | salt\n3 | | eggs"}/></label><label>Steps <small>One step per line</small><textarea required value={newRecipe.steps} onChange={e=>setNewRecipe({...newRecipe,steps:e.target.value})} placeholder={"Mix the ingredients.\nBake until golden.\nServe warm."}/></label><button className="primary big" type="submit" disabled={aiStatus==="Checking recipe…"}>{aiStatus==="Checking recipe…" ? "Checking recipe…" : "✓ Check recipe & publish"}</button>{aiStatus && <p className="ai-status">{aiStatus}</p>}</form></main>}
+      {view==="add" && <main className="page narrow"><div className="page-title"><span className="eyebrow dark">CREATE</span><h1>Add your recipe</h1><p>Share something delicious with the community.</p></div><form className="form-card" onSubmit={createRecipe}><label>Recipe title<input required value={newRecipe.title} onChange={e=>setNewRecipe({...newRecipe,title:e.target.value})} placeholder="e.g. Grandma's Sunday Lasagna"/></label><label>Recipe photo URL <small>Optional — leave blank and Flavorlyst will choose a food photo automatically.</small><input value={newRecipe.image} onChange={e=>setNewRecipe({...newRecipe,image:e.target.value})} placeholder="Optional: paste an Unsplash food-image URL"/></label><div className="two"><label>Category<select value={newRecipe.category} onChange={e=>setNewRecipe({...newRecipe,category:e.target.value})}><option>Breakfast</option><option>Lunch</option><option>Dinner</option></select></label><label>Difficulty<select value={newRecipe.difficulty} onChange={e=>setNewRecipe({...newRecipe,difficulty:e.target.value})}><option>Easy</option><option>Medium</option><option>Hard</option></select></label><label>Cooking time (minutes)<input type="number" min="1" max="600" value={newRecipe.time} onChange={e=>setNewRecipe({...newRecipe,time:e.target.value})}/></label><label>Servings<input type="number" min="1" value={newRecipe.servings} onChange={e=>setNewRecipe({...newRecipe,servings:e.target.value})}/></label></div><label>Description<textarea value={newRecipe.description} onChange={e=>setNewRecipe({...newRecipe,description:e.target.value})} placeholder="What makes this recipe special?"/></label><label>Ingredients <small>One per line: quantity | unit | ingredient</small><textarea required value={newRecipe.ingredients} onChange={e=>setNewRecipe({...newRecipe,ingredients:e.target.value})} placeholder={"2 | cups | flour\n1 | tsp | salt\n3 | | eggs"}/></label><label>Steps <small>One step per line</small><textarea required value={newRecipe.steps} onChange={e=>setNewRecipe({...newRecipe,steps:e.target.value})} placeholder={"Mix the ingredients.\nBake until golden.\nServe warm."}/></label><button className="primary big" type="submit" disabled={aiStatus==="Checking recipe…"}>{aiStatus==="Checking recipe…" ? "Checking recipe…" : "✓ Check recipe & publish"}</button>{aiStatus && <p className="ai-status">{aiStatus}</p>}</form></main>}
 
       {view==="planner" && <main className="page"><div className="page-title"><span className="eyebrow dark">PLAN AHEAD</span><h1>Weekly meal planner</h1><p>Build your week with your favorite recipes.</p></div><div className="planner">{Object.entries(planner).map(([day,id])=><div className="day" key={day}><b>{day}</b>{id ? <div className="planned" style={{backgroundImage:`linear-gradient(0deg,rgba(0,0,0,.62),transparent),url(${recipes.find(r=>r.id===id)?.image || getAutomaticRecipeImage(recipes.find(r=>r.id===id)?.title || "", recipes.find(r=>r.id===id)?.ingredients || [])})`}}><span>{recipes.find(r=>r.id===id)?.title}</span><button onClick={()=>{const next={...planner,[day]:null};update("recipe-planner",next,setPlanner)}}>×</button></div> : <select value="" onChange={e=>{const next={...planner,[day]:e.target.value};update("recipe-planner",next,setPlanner)}}><option value="">＋ Add recipe</option>{recipes.map(r=><option key={r.id} value={r.id}>{r.title}</option>)}</select>}</div>)}</div></main>}
 
