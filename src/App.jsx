@@ -315,8 +315,14 @@ function normalizeRecipes(list) {
   return Array.isArray(list) ? list.map(normalizeRecipe).filter(Boolean) : starterRecipes.map(normalizeRecipe);
 }
 
+function mergeStarterRecipes(list) {
+  const existing = Array.isArray(list) ? list : [];
+  const existingIds = new Set(existing.map(recipe => recipe?.id));
+  return [...existing, ...starterRecipes.filter(recipe => !existingIds.has(recipe.id))];
+}
+
 function App() {
-  const [recipes, setRecipes] = useState(() => normalizeRecipes(addMissingRecipeImages(load("recipe-recipes", starterRecipes))));
+  const [recipes, setRecipes] = useState(() => normalizeRecipes(addMissingRecipeImages(mergeStarterRecipes(load("recipe-recipes", starterRecipes)))));
   const [favorites, setFavorites] = useState(() => {
     const value = load("recipe-favorites", ["r1","r5"]);
     return Array.isArray(value) ? value : ["r1","r5"];
@@ -352,7 +358,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const current = normalizeRecipes(load("recipe-recipes", starterRecipes));
+    const current = normalizeRecipes(mergeStarterRecipes(load("recipe-recipes", starterRecipes)));
     const upgraded = addMissingRecipeImages(current);
     if (JSON.stringify(upgraded) !== JSON.stringify(current)) {
       save("recipe-recipes", upgraded);
