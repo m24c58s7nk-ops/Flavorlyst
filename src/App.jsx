@@ -213,13 +213,17 @@ const curatedStarterRecipeImages = {
   "r53": "https://melorecipes.com/wp-content/uploads/2025/06/teriyaki-chicken-bowl-2025-06-11-105009.webp",
   "r54": "https://images.unsplash.com/photo-1677511084683-0eba66ebaa7c?auto=format&fit=crop&w=1200&q=85",
   "r55": "https://images.unsplash.com/photo-1627906296851-6d9c5e4db592?auto=format&fit=crop&w=1200&q=85",
-  "r56": "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1200&q=85"
+  "r56": "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1200&q=85",
+  // Verified snack-specific photos from Pexels (free to use).
+  "r57": "https://images.pexels.com/photos/6422042/pexels-photo-6422042.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  "r58": "https://images.pexels.com/photos/6306540/pexels-photo-6306540.jpeg?auto=compress&cs=tinysrgb&w=1200",
+  "r59": "https://images.pexels.com/photos/10497790/pexels-photo-10497790.jpeg?auto=compress&cs=tinysrgb&w=1200"
 };
 
 const recipeImageChoices = [
-  { words: /popcorn/i, image: "https://images.unsplash.com/photo-1585647347483-22bd5dace89a?auto=format&fit=crop&w=1200&q=85" },
-  { words: /snack.*apple|apple.*snack/i, image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=1200&q=85" },
-  { words: /tortilla crisp|cheesy crisp/i, image: "https://images.unsplash.com/photo-1552332386-f8dd00dc8f85?auto=format&fit=crop&w=1200&q=85" },
+  { words: /popcorn/i, image: "https://images.pexels.com/photos/6422042/pexels-photo-6422042.jpeg?auto=compress&cs=tinysrgb&w=1200" },
+  { words: /snack.*apple|apple.*snack|apple.*oat.*bite|energy bite/i, image: "https://images.pexels.com/photos/6306540/pexels-photo-6306540.jpeg?auto=compress&cs=tinysrgb&w=1200" },
+  { words: /tortilla crisp|cheesy crisp|tortilla chip/i, image: "https://images.pexels.com/photos/10497790/pexels-photo-10497790.jpeg?auto=compress&cs=tinysrgb&w=1200" },
   { words: /chocolate chip cookie|cookie/i, image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85" },
   { words: /yogurt bark|berry bark/i, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=85" },
   { words: /brownie/i, image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=1200&q=85" },
